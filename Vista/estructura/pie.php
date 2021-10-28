@@ -1,7 +1,7 @@
 <!-- Pie redirect index php htdocs -->
 <footer class="bg-dark mt-auto">
     <div class="text-center text-white py-2 bg-secondary">
-        <a class="text-white" href="https://github.com/santiagoScantamburlo/library-inv">Desarrollado por Graff Rocío y Scantamburlo Santiago.</a>
+        <a class="text-white" href="https://github.com/rociograff/Library">Desarrollado por Graff Rocío y Scantamburlo Santiago.</a>
     </div>
 </footer>
 

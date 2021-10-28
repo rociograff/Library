@@ -6,10 +6,12 @@ include_once '../estructura/cabecera.php';
     <?php
     if (isset($_GET['message'])) {
         $validador = new validador();
-        $error = $validador->tieneError($_GET['message']);
+        $error = $validador->tieneError($_GET['message']); //Verifico si el mensaje tiene algun error
         if(!$error) {
+            //Si no tiene error muestra el mensaje en verde
         echo "<div class='mt-3 container card bg-success bg-gradient text-white text-center'>" . $_GET['message'] . "</div>";
         } else {
+            //Si tiene error muestra el mensaje en rojo
         echo "<div class='mt-3 container card bg-danger bg-gradient text-white text-center'>" . $_GET['message'] . "</div>";
         }
     }

@@ -1,12 +1,11 @@
 <?php
-require('../../vendor/autoload.php');
+require('../../vendor/autoload.php');  //autoload carga todas las funciones
 
 use Respect\Validation\Validator as v;
 
-class validador
-{
-    public function validarDatos($datos)
-    {
+class validador {
+    //Nueva Persona
+    public function validarDatos($datos) {
         $mensajeError = "";
         $valido = true;
         $nro_dni = $datos['nro_dni'];
@@ -16,7 +15,7 @@ class validador
         $telefono = $datos['telefono'];
         $domicilio = $datos['domicilio'];
 
-        //VALIDO EL NUMERO DE DNI
+        //Valido el numero de DNI
         $checkValid = v::positive()->noWhitespace()->length(7, 8); //CREO LA INSTANCIA DE VALIDADOR DE LA LIBRERIA
         $valido = $checkValid->validate($nro_dni); //REALIZA LA VALIDACION CON LOS PARAMETROS ELEGIDOS ANTERIORMENTE
         if (!$valido) {
@@ -24,31 +23,36 @@ class validador
             $mensajeError .= "DNI inválido<br>";
         }
 
+        //Valido el apellido
         $checkValid = v::alpha()->length(1, 50)->regex("/^[A-Z]+([\ A-Za-z]+)*/");
         $valido = $checkValid->validate($apellido);
         if (!$valido) {
             $mensajeError .= "Apellido inválido<br>";
         }
 
+        //Valido el nombre
         $checkValid = v::alpha()->length(1, 50)->regex("/^[A-Z]+([\ A-Za-z]+)*/");
         $valido = $checkValid->validate($nombre);
         if (!$valido) {
             $mensajeError .= "Nombre inválido<br>";
         }
 
-        $checkValid = v::minAge(0)->date();
+        //Valido la fecha de nacimiento
+        $checkValid = v::minAge(0)->date();  //minAge(0) para que se pueda cargar una persona que haya nacido
         $valido = $checkValid->validate($fecha_nac);
         if (!$valido) {
             $mensajeError .= "Fecha inválida<br>";
         }
 
+        //Valido el numero de telefono
         $checkValid = v::phone();
         $valido = $checkValid->validate($telefono);
         if (!$valido) {
             $mensajeError .= "Teléfono inválido<br>";
         }
 
-        $checkValid = v::stringType()->length(5, 200);
+        //Valido el domicilio
+        $checkValid = v::stringType()->length(5, 200);   //Longitud (5, 200) porque NULL tiene longitud 4
         $valido = $checkValid->validate($domicilio);
         if (!$valido) {
             $mensajeError .= "Domicilio inválido<br>";
@@ -57,8 +61,8 @@ class validador
         return $mensajeError;
     }
 
-    public function validarDatosModificacion($datos)
-    {
+    //Modificar Persona
+    public function validarDatosModificacion($datos) {
         $mensajeError = "";
         $valido = true;
         $nombre = $datos['nombre'];
@@ -66,25 +70,29 @@ class validador
         $telefono = $datos['telefono'];
         $domicilio = $datos['domicilio'];
 
+        //Valido el apellido
         $checkValid = v::alpha()->length(1, 50)->regex("/^[A-Z]+([\ A-Za-z]+)*/");
         $valido = $checkValid->validate($apellido);
         if (!$valido) {
             $mensajeError .= "Apellido inválido<br>";
         }
 
+        //Valido el nombre
         $checkValid = v::alpha()->length(1, 50)->regex("/^[A-Z]+([\ A-Za-z]+)*/");
         $valido = $checkValid->validate($nombre);
         if (!$valido) {
             $mensajeError .= "Nombre inválido<br>";
         }
 
+        //Valido el numero de telefono
         $checkValid = v::phone();
         $valido = $checkValid->validate($telefono);
         if (!$valido) {
             $mensajeError .= "Teléfono inválido<br>";
         }
 
-        $checkValid = v::stringVal()->length(5, 200);
+        //Valido el domicilio
+        $checkValid = v::stringVal()->length(5, 200); //Longitud (5, 200) porque NULL tiene longitud 4
         $valido = $checkValid->validate($domicilio);
         if (!$valido) {
             $mensajeError .= "Domicilio inválido<br>";
@@ -93,8 +101,8 @@ class validador
         return $mensajeError;
     }
 
-    public function validarDni($dni)
-    {
+    //Validar DNI para modificar una persona
+    public function validarDni($dni) {
         $mensajeError = "";
         $checkValid = v::positive()->noWhitespace()->length(7, 8); //CREO LA INSTANCIA DE VALIDADOR DE LA LIBRERIA
         $valido = $checkValid->validate($dni); //REALIZA LA VALIDACION CON LOS PARAMETROS ELEGIDOS ANTERIORMENTE
@@ -105,8 +113,8 @@ class validador
         return $mensajeError;
     }
 
+    //Verifico si el mensaje tiene error
     public function tieneError($mensaje) {
         return v::contains('Error')->validate($mensaje);
-        
     }
 }

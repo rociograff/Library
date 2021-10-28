@@ -1,6 +1,6 @@
 <?php
-class persona
-{
+class persona {
+    //Atributos
     private $nroDni;
     private $apellido;
     private $nombre;
@@ -9,8 +9,8 @@ class persona
     private $domicilio;
     private $mensajeOperacion;
 
-    public function __construct()
-    {
+    //Constructor
+    public function __construct() {
         $this->nroDni = "";
         $this->apellido = "";
         $this->nombre = "";
@@ -20,88 +20,76 @@ class persona
         $this->mensajeOperacion = "";
     }
 
-    public function getApellido()
-    {
-        return $this->apellido;
-    }
-
-    public function setApellido($apellido)
-    {
-        $this->apellido = $apellido;
-    }
-
-    public function getNroDni()
-    {
+    //Metodos observadores
+    public function getNroDni() {
         return $this->nroDni;
     }
 
-    public function setNroDni($nroDni)
-    {
-        $this->nroDni = $nroDni;
+    public function getApellido() {
+        return $this->apellido;
     }
 
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-    }
-
-    public function getFechaNac()
-    {
+    public function getFechaNac() {
         return $this->fechaNac;
     }
 
-    public function setFechaNac($fechaNac)
-    {
-        $this->fechaNac = $fechaNac;
-    }
-
-    public function getTelefono()
-    {
+    public function getTelefono() {
         return $this->telefono;
     }
 
-    public function setTelefono($telefono)
-    {
-        $this->telefono = $telefono;
-    }
-
-    public function getDomicilio()
-    {
+    public function getDomicilio() {
         return $this->domicilio;
     }
 
-    public function setDomicilio($domicilio)
-    {
-        $this->domicilio = $domicilio;
-    }
-
-    public function getMensajeOperacion()
-    {
+    public function getMensajeOperacion() {
         return $this->mensajeOperacion;
     }
 
-    public function setMensajeOperacion($mensajeOperacion)
-    {
+    //Metodos Modificadores
+    public function setNroDni($nroDni) {
+        $this->nroDni = $nroDni;
+    }
+
+    public function setApellido($apellido) {
+        $this->apellido = $apellido;
+    }
+
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    public function setFechaNac($fechaNac) {
+        $this->fechaNac = $fechaNac;
+    }
+
+    public function setTelefono($telefono) {
+        $this->telefono = $telefono;
+    }
+
+    public function setDomicilio($domicilio) {
+        $this->domicilio = $domicilio;
+    }
+
+    public function setMensajeOperacion($mensajeOperacion) {
         $this->mensajeOperacion = $mensajeOperacion;
     }
 
-    public function setear($dni, $nombre, $apellido, $domicilio, $fechaNac, $telefono)
-    {
+    //Metodo para setear
+    public function setear($dni, $apellido, $nombre, $domicilio, $fechaNac, $telefono) {
         $this->setNroDni($dni);
-        $this->setNombre($nombre);
         $this->setApellido($apellido);
+        $this->setNombre($nombre);
         $this->setDomicilio($domicilio);
         $this->setFechaNac($fechaNac);
         $this->setTelefono($telefono);
     }
 
-    public function cargar()
-    {
+    /******************Funciones Base de Datos******************/
+    public function cargar() {
         $resp = false;
         $base = new BaseDatos();
         $sql = "SELECT * FROM 'persona' WHERE nro_dni = " . $this->getNroDni();
@@ -112,8 +100,8 @@ class persona
                     $row = $base->Registro();
                     $this->setear(
                         $row['nro_dni'],
-                        $row['nombre'],
                         $row['apellido'],
+                        $row['nombre'],
                         $row['domicilio'],
                         $row['fecha_nac'],
                         $row['telefono']
@@ -126,11 +114,10 @@ class persona
         return $resp;
     }
 
-    public function modificar()
-    {
+    public function modificar() {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE persona SET nombre = '{$this->getNombre()}', apellido = '{$this->getApellido()}', telefono = '{$this->getTelefono()}' , domicilio = '{$this->getDomicilio()}' , fecha_nac = '{$this->getFechaNac()}' WHERE nro_dni = '" . $this->getNroDni() . "'";
+        $sql = "UPDATE persona SET apellido = '{$this->getApellido()}', nombre = '{$this->getNombre()}', telefono = '{$this->getTelefono()}' , domicilio = '{$this->getDomicilio()}' , fecha_nac = '{$this->getFechaNac()}' WHERE nro_dni = '" . $this->getNroDni() . "'";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -143,8 +130,7 @@ class persona
         return $resp;
     }
 
-    public function eliminar()
-    {
+    public function eliminar() {
         $resp = false;
         $base = new BaseDatos();
         $sql = "DELETE FROM persona WHERE nro_dni = " . $this->getNroDni();
@@ -160,8 +146,7 @@ class persona
         return $resp;
     }
 
-    public static function listar($parametro = "")
-    {
+    public static function listar($parametro = "") {
         $arreglo = array();
         $base = new BaseDatos();
         $sql = "SELECT * FROM persona ";
@@ -177,8 +162,8 @@ class persona
                         $obj = new persona();
                         $obj->setear(
                             $row['nro_dni'],
-                            $row['nombre'],
                             $row['apellido'],
+                            $row['nombre'],
                             $row['domicilio'],
                             $row['fecha_nac'],
                             $row['telefono']
@@ -194,8 +179,7 @@ class persona
         return $arreglo;
     }
 
-    public function insertar()
-    {
+    public function insertar() {
         $resp = false;
         $base = new BaseDatos();
         $sql = "INSERT INTO persona(nro_dni, apellido, nombre, fecha_nac, telefono, domicilio)

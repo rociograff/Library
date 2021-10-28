@@ -1,6 +1,5 @@
 <?php
-function data_submitted()
-{
+function data_submitted() {
     $_AAux = array();
     if (!empty($_POST)) {
         $_AAux = $_POST;
@@ -20,8 +19,7 @@ function data_submitted()
 
 }
 
-function verEstructura($e)
-{
+function verEstructura($e) {
     echo "<pre>";
     print_r($e);
     echo "</pre>";

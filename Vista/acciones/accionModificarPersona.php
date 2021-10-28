@@ -6,7 +6,7 @@ $validador = new validador();
 
 if (isset($datos['nro_dni'])) {
     $dni = $datos['nro_dni'];
-    $message = $validador->validarDni($dni);
+    $message = $validador->validarDni($dni); //Verifico el DNI para modificar a la persona 
 
     if ($message != "") {
         header('Location: ../pages/modificarPersona.php?message=' . urlencode($message));

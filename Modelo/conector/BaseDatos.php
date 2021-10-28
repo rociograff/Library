@@ -1,7 +1,6 @@
 <?php
 
-class BaseDatos extends PDO
-{
+class BaseDatos extends PDO {
     private $engine;
     private $host;
     private $database;
@@ -13,8 +12,7 @@ class BaseDatos extends PDO
     private $resultado;
     // private $cantFilasResultado;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->engine = 'mysql';
         $this->host = 'localhost';
         $this->database = 'library';
@@ -41,31 +39,26 @@ class BaseDatos extends PDO
      *
      * @return boolean
      */
-    public function Iniciar()
-    {
+    public function Iniciar() {
         return $this->getConec();
     }
 
-    public function getConec()
-    {
+    public function getConec() {
         return $this->conec;
     }
 
-    public function setDebug($debug)
-    {
+    public function setDebug($debug) {
         $this->debug = $debug;
     }
 
-    public function getDebug()
-    {
+    public function getDebug() {
         return $this->debug;
     }
 
     /**
      * Funcion que setea la variable instancia error
      */
-    public function setError($e)
-    {
+    public function setError($e) {
         $this->error = $e;
     }
 
@@ -73,16 +66,14 @@ class BaseDatos extends PDO
      * Funcion que retorna una cadena con descripcion del ultimo error seteado
      * @return
      */
-    public function getError()
-    {
+    public function getError() {
         return "\n" . $this->error;
     }
 
     /**
      * Funcion que setea la variable instancia sql
      */
-    public function setSQL($e)
-    {
+    public function setSQL($e) {
         return "\n" . $this->sql = $e;
     }
 
@@ -90,13 +81,11 @@ class BaseDatos extends PDO
      * Funcion que retorna una cadena con el ultimo sql seteado
      * @return
      */
-    public function getSQL()
-    {
+    public function getSQL() {
         return "\n" . $this->sql;
     }
 
-    public function Ejecutar($sql)
-    {
+    public function Ejecutar($sql) {
         $this->setError("");
         $this->setSQL($sql);
         if (stristr($sql, "insert")) { // se desea INSERT ?
@@ -119,8 +108,7 @@ class BaseDatos extends PDO
      *caso contrario se retorna -1
      */
 
-    private function EjecutarInsert($sql)
-    {
+    private function EjecutarInsert($sql) {
         $resultado = parent::query($sql);
         if (!$resultado) {
             $this->analizarDebug();
@@ -139,8 +127,7 @@ class BaseDatos extends PDO
      * @return integer
      *
      */
-    private function EjecutarDeleteUpdate($sql)
-    {
+    private function EjecutarDeleteUpdate($sql) {
         $cantFilas = -1;
         $resultado = parent::query($sql);
         if (!$resultado) {
@@ -156,8 +143,7 @@ class BaseDatos extends PDO
      * @return integer
      *
      */
-    private function EjecutarSelect($sql)
-    {
+    private function EjecutarSelect($sql) {
         $cant = -1;
         $resultado = parent::query($sql);
         if (!$resultado) {
@@ -177,8 +163,7 @@ class BaseDatos extends PDO
      *
      * @return array
      */
-    public function Registro()
-    {
+    public function Registro() {
         $filaActual = false;
         $indiceActual = $this->getIndice();
         if ($indiceActual >= 0) {
@@ -208,21 +193,19 @@ class BaseDatos extends PDO
     //     }
     // }
 
-    private function setIndice($valor)
-    {
+    private function setIndice($valor) {
         $this->indice = $valor;
     }
 
-    private function getIndice()
-    {
+    private function getIndice() {
         return $this->indice;
     }
-    private function setResultado($valor)
-    {
+
+    private function setResultado($valor) {
         $this->resultado = $valor;
     }
-    private function getResultado()
-    {
+    
+    private function getResultado() {
         return $this->resultado;
     }
 }
